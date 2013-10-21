@@ -293,6 +293,8 @@ def ishidden(filename):
 
     return False
 
+def isempty(filename):
+    return not os.path.getsize(filename)
 
 def istextfile(filename):
     with open(filename, mode='rb') as f:
@@ -495,8 +497,8 @@ def main(*args):
     glob_match = GlobMatch(options.skip)
 
     for filename in args:
-        # ignore hidden files
-        if ishidden(filename):
+        # ignore hidden or empty files
+        if ishidden(filename) or isempty(filename):
             continue
 
         if os.path.isdir(filename):
